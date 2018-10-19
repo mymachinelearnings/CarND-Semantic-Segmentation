@@ -1,6 +1,71 @@
-# Semantic Segmentation
-### Introduction
-In this project, you'll label the pixels of a road in images using a Fully Convolutional Network (FCN).
+## Self-Driving Car Engineer Nanodegree Program
+## Term 3 Project 1
+### Path Planning Project
+
+---
+
+### Writeup Template
+This document explains the Semantic Segmentation project that involves building a Fully Convolutional Network(FCN) and discusses the architecture. The outcome of this project will be a pixel wise labelling of the input image
+
+---
+### Rubric Points
+Here are the [rubric points](https://review.udacity.com/#!/rubrics/989/view) for the project that are to be satisfied.
+
+Here is a link to my [project code](https://github.com/mymachinelearnings/CarND-Path-Planning-Project/)
+
+---
+### What is Semantic Segmentation
+Semantic segmentation is understanding an image at pixel level. Simply put, it is the process of understanding what is in an image at pixel level. 
+Each pixel of the image will be assigned a corresponding class. This is really useful in preception systems. 
+With respect to autonomous driving systems, there are various applications for Semantic Segmentation like the need to understand the scene around 
+the car and perceive what's around it - whether its another car, or a pedestrian, a traffic light, or a static obstacle, or more importantly, the drivable portion of the road
+
+### Architecture
+
+Semantic Segmenation can be achieved by Fully Convolutional Networks(FCN)
+
+In the normal convolutional neural networks(CNN) used for classification, the architecture would be a series of convolutional/non-linear activation/pooling layers 
+followed by Fully Connected(Dense) layers to classify the objects in the image. The Fully Connected layers extract the 'what' portion while losing the details about the
+ 'where' portion(spatial information). Also due to the fact that fully connected layers are of a specific size, the inputs to these kinds of classifiers are usually fixed. 
+It cannot operate on different sizes of inputs. 
+ 
+If we replace the fully connected layers with a series of transpose convolutional layers(meaning upsampling from samller to larger size while doing reverse convolution), then the output would be of the same size as the input, and since there are no dense/fully connected layers, the spatial information is saved and we can estimate both the 'what' and 'where' portions of the image. This way, each pixel could be assigned a class.
+
+There are 3 main parts to FCN's
+
+- Encoder part followed by a 1x1 convolution
+- Decoder part
+- Skip Connections
+
+The encoder consists of a series of Convolutional layers (with non-linear activations & Pooling layers) that gradually minimizes the state space. 
+This module is responsible for determining the 'what' portion of hte object - meaning to classify the object's class in the image
+
+The decoder consists of a series of transpose convolutional layers (upsampling layers) that retain the size of the image to its original shape while determining the 'where' portion of the image - the spatial information that's lost during encoder will be retained
+
+Skip connections enhance the spatial information so that the final segmentation is more accurate. Skips connections are implemented by element-wise addition of a decoder layer
+with its corresponding encoder layer. Note that the shpaes of these two should be same for matrix addition to happen
+
+### Implementation
+I've used Tensorflow 1.x with Python 3.6 to implement the solution.
+
+The encoder part is taken from a pretrained model on VGG6 trained on ImageNet. Encoder had 5 pooling layers of 2x2 Kernel which means the image must have been squeezed by 32x in its height x width
+The final dense layers of VGG are replaced by a 1x1 convolution layer. 
+This is followed by a transpose convolution (upsampling) by the same factor as it was downsampled in the encoder portion(32x). This is done in 3 stages with Kernel Sizes of 4, 4, 16 and Strides of 2, 2, 8 respectively.
+
+To enhance the segmentation, the 4th layer of VGG Encoder is connected to the first decoder layer, 5th layer of VGG Encoder is connected to the second decoder layer. When I say connected, it means it is the addition of the skip layer with the its previous layer
+
+The final activation loss is calculated as the cross entropy softmax and the network is trained with a learning rate of 0.001 for different epochs to compare the results
+
+It is clearly observed that the accuracy (measured here by th IOU metric) is better with increasing number of epochs. I tried for 2, 5, 20 epochs and here are the loss values after each epoch
+
+|     Epochs    |     Loss      |
+| ------------- | ------------- |
+| 2 Epochs      | 0.186         |
+| 5 Epochs      | 0.119         |
+| 20 Epochs     | 0.025         |
+
+
+
 
 ### Setup
 ##### GPU
