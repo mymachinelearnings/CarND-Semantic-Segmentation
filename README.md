@@ -11,7 +11,7 @@ This document explains the Semantic Segmentation project that involves building 
 ### Rubric Points
 Here are the [rubric points](https://review.udacity.com/#!/rubrics/989/view) for the project that are to be satisfied.
 
-Here is a link to my [project code](https://github.com/mymachinelearnings/CarND-Path-Planning-Project/)
+Here is a link to my [project code](https://github.com/mymachinelearnings/CarND-Semantic-Segmentation)
 
 ---
 ### What is Semantic Segmentation
