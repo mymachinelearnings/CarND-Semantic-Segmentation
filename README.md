@@ -15,6 +15,10 @@ Here is a link to my [project code](https://github.com/mymachinelearnings/CarND-
 
 ---
 ### What is Semantic Segmentation
+
+![Semantic Segmentation Image](data/WriteupImages/20epoch_3.png)
+
+
 Semantic segmentation is understanding an image at pixel level. Simply put, it is the process of understanding what is in an image at pixel level. 
 Each pixel of the image will be assigned a corresponding class. This is really useful in preception systems. 
 With respect to autonomous driving systems, there are various applications for Semantic Segmentation like the need to understand the scene around 
@@ -64,7 +68,29 @@ It is clearly observed that the accuracy (measured here by th IOU metric) is bet
 | 5 Epochs      | 0.119         |
 | 20 Epochs     | 0.025         |
 
+### Results
 
+#### Skip Connections
+
+It is clear that Skip connections have increased the accuracy of the segmentation, here I'm comparing the same images with and without Skip Connections
+
+|     With Skip Connection                                              |     Without Skip Connections                                                |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ![Semantic Segmentation Image](data/WriteupImages/WithSkip1.png)      | ![Semantic Segmentation Image](data/WriteupImages/WithoutSkip1.png)         |
+| ![Semantic Segmentation Image](data/WriteupImages/WithSkip2.png)      | ![Semantic Segmentation Image](data/WriteupImages/WithoutSkip2.png)         |
+
+#### Training with different Epochs
+
+The trainable parameters of a network will be adjusted during each epoch in a training. There's threshold to the number of epochs to be used, but the general idea is that the 
+accuracy increases with the number of epochs during training (up to a certain level after which it becomes more or less constant)
+
+Here, I've tried with 2, 5, 20 Epochs and compared the results and its clear the higher epochs gave better results
+
+|     2 Epochs                                                          |     5 Epochs                                                                |     20 Epochs                                                               |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| ![Semantic Segmentation Image](data/WriteupImages/2epoch_1.png)      | ![Semantic Segmentation Image](data/WriteupImages/5epoch_1.png)              | ![Semantic Segmentation Image](data/WriteupImages/20epoch_1.png)            |
+| ![Semantic Segmentation Image](data/WriteupImages/2epoch_2.png)      | ![Semantic Segmentation Image](data/WriteupImages/5epoch_2.png)              | ![Semantic Segmentation Image](data/WriteupImages/20epoch_2.png)            |
+| ![Semantic Segmentation Image](data/WriteupImages/2epoch_3.png)      | ![Semantic Segmentation Image](data/WriteupImages/5epoch_3.png)              | ![Semantic Segmentation Image](data/WriteupImages/20epoch_3.png)            |
 
 
 ### Setup
